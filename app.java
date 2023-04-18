@@ -31,34 +31,36 @@ public class textpad implements ActionListener {
     JMenuItem miAbout=new JMenuItem("About");
     // JMenuItem mi33=new JMenuItem("Paste");
 
-    // String fnts[]={"Arial","Calibri","Times New Roman","Comic Sans"};
-    // JList fonts=new JList<>(fnts);
-    // fonts.addActionListener(this);
+    String fnts[]=GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+    String sizes[]={"10","16","21","41","51"};
+    JComboBox fonts=new JComboBox<>(fnts);
+    JComboBox fontSizes=new JComboBox<>(sizes);
 
     JTextArea ta=new JTextArea();
     JScrollPane scrollPane=new JScrollPane(ta);
     JDialog d=new JDialog(f,"About",true);
 
-    textpad(){
+    
 
-        //-----------------
+    textpad(){
         d.setLayout(new FlowLayout());
         d.add(new JLabel("This is textpad."));
         d.add(new JLabel("Created by naveen_21tyagi"));
         d.add(new JLabel(":)"));
-    d.setVisible(false);
-    JButton ok=new JButton("OK");
-    ok.addActionListener ( new ActionListener()  
+        d.setVisible(false);
+        JButton ok=new JButton("OK");
+        ok.addActionListener ( new ActionListener()  
         {  
             public void actionPerformed( ActionEvent e )  
             {  
                 d.setVisible(false);  
             }  
         });
-    d.add(ok);
-    d.setSize(200,150);
+        d.add(ok);
+        d.setSize(200,150);
+        fonts.addActionListener(this);
+        fontSizes.addActionListener(this);
 
-//-------------------
         miNew.addActionListener(this);
         miOpen.addActionListener(this);
         miSave.addActionListener(this);
@@ -94,7 +96,8 @@ public class textpad implements ActionListener {
         mb.add(mFile);
         mb.add(mEdit);
         mb.add(mHelp);
-        // mb.add(fonts);
+        mb.add(fonts);
+        mb.add(fontSizes);
         f.addWindowListener (new WindowAdapter() {    
             public void windowClosing (WindowEvent e) {    
                 System.exit(0);    
@@ -179,9 +182,13 @@ public class textpad implements ActionListener {
             d.setVisible(true);
 
         }
+        else if(e.getSource()==fonts || e.getSource()==fontSizes){
+            String fnt=fonts.getSelectedItem().toString();
+            int size=Integer.parseInt(fontSizes.getSelectedItem().toString());
+            ta.setFont(new Font(fnt, Font.PLAIN, size));
+        }
     }
     public static void main(String args[]) throws Exception{
-        // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
 
         new textpad();
