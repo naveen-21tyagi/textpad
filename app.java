@@ -3,24 +3,45 @@ package textpad;
 import javax.swing.*;
 import javax.swing.plaf.FileChooserUI;
 import java.io.*;
-import java.awt.FlowLayout;
-import java.awt.TextArea;
+import java.awt.*;
 import java.awt.event.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.BufferedReader;
-public class app implements ActionListener {
-    JFrame f;
-    JMenuBar mb;
-    JMenu m1,m2,m3;
+import java.awt.print.PrinterException;
 
-    JMenuItem mi11,mi12,mi13,mi21,mi22,mi23,mi31,mi32,mi33;
-    JTextArea ta;
+public class textpad implements ActionListener {
+    JFrame f=new JFrame();
+
+    JMenuBar mb=new JMenuBar();
+
+    JMenu mFile=new JMenu("File");
+    JMenu mEdit=new JMenu("Edit");
+    JMenu mHelp=new JMenu("Help");
+
+    JMenuItem miNew=new JMenuItem("New");
+    JMenuItem miOpen=new JMenuItem("Open");
+    JMenuItem miSave=new JMenuItem("Save");
+    JMenuItem miPrint = new JMenuItem("Print");
+    JMenuItem miExit = new JMenuItem("Exit");
+
+    JMenuItem miCut=new JMenuItem("Cut");
+    JMenuItem miCopy=new JMenuItem("Copy");
+    JMenuItem miPaste=new JMenuItem("Paste");
+    JMenuItem miSelectAll = new JMenuItem("Select All");
+
+    // mi31=new JMenuItem("Documentation");
+    JMenuItem miAbout=new JMenuItem("About");
+    // JMenuItem mi33=new JMenuItem("Paste");
+
+    // String fnts[]={"Arial","Calibri","Times New Roman","Comic Sans"};
+    // JList fonts=new JList<>(fnts);
+    // fonts.addActionListener(this);
+
+    JTextArea ta=new JTextArea();
+    JScrollPane scrollPane=new JScrollPane(ta);
     JDialog d=new JDialog(f,"About",true);
 
-    app(){
+    textpad(){
+
+        //-----------------
         d.setLayout(new FlowLayout());
         d.add(new JLabel("This is textpad."));
         d.add(new JLabel("Created by naveen_21tyagi"));
@@ -36,144 +57,133 @@ public class app implements ActionListener {
         });
     d.add(ok);
     d.setSize(200,150);
-        f=new JFrame();
 
-        mb=new JMenuBar();
+//-------------------
+        miNew.addActionListener(this);
+        miOpen.addActionListener(this);
+        miSave.addActionListener(this);
+        miPrint.addActionListener(this);
+        miExit.addActionListener(this);
 
-        m1=new JMenu("File");
-        m2=new JMenu("Edit");
-        m3=new JMenu("Help");
 
-        mi11=new JMenuItem("New");
-        mi12=new JMenuItem("Open");
-        mi13=new JMenuItem("Save");
-        mi11.addActionListener(this);
-        mi12.addActionListener(this);
-        mi13.addActionListener(this);
+        miCut.addActionListener(this);
+        miCopy.addActionListener(this);
+        miPaste.addActionListener(this);
+        miSelectAll.addActionListener(this);
 
-        mi21=new JMenuItem("Cut");
-        mi22=new JMenuItem("Copy");
-        mi23=new JMenuItem("Paste");
-        mi21.addActionListener(this);
-        mi22.addActionListener(this);
-        mi23.addActionListener(this);
 
-        mi31=new JMenuItem("Documentation");
-        mi32=new JMenuItem("About");
-        // JMenuItem mi33=new JMenuItem("Paste");
-        mi31.addActionListener(this);
-        mi32.addActionListener(this);
+        // mi31.addActionListener(this);
+        miAbout.addActionListener(this);
         // mi33.addActionListener(this);
 
-        ta=new JTextArea(25,50);
-        // ta.setBounds(10,20,30,40);
-        m1.add(mi11);
-        m1.add(mi12);
-        m1.add(mi13);
+        mFile.add(miNew);
+        mFile.add(miOpen);
+        mFile.add(miSave);
+        mFile.add(miPrint);
+        mFile.add(miExit);
 
-        m2.add(mi21);
-        m2.add(mi22);
-        m2.add(mi23);
+        mEdit.add(miCut);
+        mEdit.add(miCopy);
+        mEdit.add(miPaste);
+        mEdit.add(miSelectAll);
 
-        m3.add(mi31);
-        m3.add(mi32);
-        // m3.add(mi33);
+        // mHelp.add(mi31);
+        mHelp.add(miAbout);
+        // mHelp.add(mi33);
 
-        mb.add(m1);
-        mb.add(m2);
-        mb.add(m3);
+        mb.add(mFile);
+        mb.add(mEdit);
+        mb.add(mHelp);
+        // mb.add(fonts);
         f.addWindowListener (new WindowAdapter() {    
             public void windowClosing (WindowEvent e) {    
                 System.exit(0);    
             }    
         });
         f.setJMenuBar(mb);
-        f.add(new JScrollPane(ta));  
+        f.add(scrollPane);  
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         f.setTitle("Textpad");
-        // f.setSize(400,500);
-        f.pack();
-        f.setLayout(null);
+        f.setSize(700,500);
+        // f.pack();
+        // f.setLayout(null);
         f.setVisible(true);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==mi11){
-            // try{
-            // BuffeReader file=new BufferedReader("untitled.txt");
-            ta.setText("");
-            // }
-            // catch(FileNotFoundException ee){
-                
-            // }
+        if(e.getSource()==miNew){
+            ta.setText(null);
         }
-        if(e.getSource()==mi12){
-            // try{
-            // FileReader fr=new FileReader("new.txt");    
-            // BufferedReader br=new BufferedReader(fr);    
-    
-            // int i;  
-            // String text="";  
-            // while((i=br.read())!=-1){  
-            // text+=((char)i);  
-            // }
-            // ta.setText(text);  
-            // br.close();    
-            // fr.close();
-            // }
-            // catch(FileNotFoundException ee){
-
-            // }
-            // catch(IOException ee){
-
-            // }
-            if(e.getSource()==mi12){    
-    JFileChooser fc=new JFileChooser();    
-    int i=fc.showOpenDialog(null);    
-    if(i==JFileChooser.APPROVE_OPTION){    
-        File f=fc.getSelectedFile();    
-        String filepath=f.getPath();    
-        try{  
-        BufferedReader br=new BufferedReader(new FileReader(filepath));    
-        String s1="",s2="";                         
-        while((s1=br.readLine())!=null){    
-        s2+=s1+"\n";    
-        }    
-        ta.setText(s2);    
-        br.close();    
-        }catch (Exception ex) {ex.printStackTrace();  }                 
-    }    
-}   
-        }
-        if(e.getSource()==mi13){
-            // try{
-            // FileWriter file=new FileWriter("new.txt");
-            // file.write(ta.getText());
-            // file.close();
-            // }
-            // catch(IOException ee){
-                
-            // }
+        else if(e.getSource()==miOpen){    
             JFileChooser fc=new JFileChooser();    
-    int i=fc.showSaveDialog(null);    
-    if(i==JFileChooser.APPROVE_OPTION){    
-        File f=fc.getSelectedFile();    
-        String filepath=f.getPath();    
-        try{  
-                FileWriter file=new FileWriter(filepath);
-            file.write(ta.getText());
-            file.close();
-        }       
-        catch (Exception ex) {ex.printStackTrace();  
-        } 
-    }             
+            int action=fc.showOpenDialog(null);    
+            if(action==JFileChooser.APPROVE_OPTION){    
+                File f=fc.getSelectedFile();    
+                String filepath=f.getPath();    
+                try{  
+                    BufferedReader br=new BufferedReader(new FileReader(filepath));    
+                    String s1="",s2="";                         
+                    while((s1=br.readLine())!=null){    
+                    s2+=s1+"\n";    
+                    }    
+                    ta.setText(s2);    
+                    br.close();    
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();  
+                }                 
+            }    
+        }   
+        
+        else if(e.getSource()==miSave){
+            JFileChooser fc=new JFileChooser();    
+            int action=fc.showSaveDialog(null);    
+            if(action==JFileChooser.APPROVE_OPTION){    
+                File f=fc.getSelectedFile();    
+                String filepath=f.getPath();    
+                try{  
+                    FileWriter file=new FileWriter(filepath);
+                    file.write(ta.getText());
+                    file.close();
+                }       
+                catch (Exception ex) {
+                    ex.printStackTrace();  
+                } 
+            }             
         }
-
-        if(e.getSource()==mi32){
+        else if(e.getSource()==miPrint){
+            try{
+                ta.print();
+            }
+            catch(PrinterException ex){
+                ex.printStackTrace();
+            }
+        }
+        else if(e.getSource()==miExit){
+            System.exit(0);
+        }
+        else if(e.getSource()==miCut){
+            ta.cut();
+        }
+        else if(e.getSource()==miCopy){
+            ta.copy();
+        }
+        else if(e.getSource()==miPaste){
+            ta.paste();
+        }
+        else if(e.getSource()==miSelectAll){
+            ta.selectAll();
+        }
+        else if(e.getSource()==miAbout){
             d.setVisible(true);
 
         }
     }
-    public static void main(String args[]){
-        new app();
+    public static void main(String args[]) throws Exception{
+        // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
+
+        new textpad();
     }
 }
