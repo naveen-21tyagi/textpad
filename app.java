@@ -1,6 +1,7 @@
 package textpad;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.FileChooserUI;
 import java.io.*;
 import java.awt.*;
@@ -33,8 +34,10 @@ public class textpad implements ActionListener {
 
     String fnts[]=GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
     String sizes[]={"10","16","21","41","51"};
+    String themes[]={"Light","Dark"};
     JComboBox fonts=new JComboBox<>(fnts);
     JComboBox fontSizes=new JComboBox<>(sizes);
+    JComboBox theme=new JComboBox<>(themes);
 
     JTextArea ta=new JTextArea();
     JScrollPane scrollPane=new JScrollPane(ta);
@@ -60,6 +63,7 @@ public class textpad implements ActionListener {
         d.setSize(200,150);
         fonts.addActionListener(this);
         fontSizes.addActionListener(this);
+        theme.addActionListener(this);
 
         miNew.addActionListener(this);
         miOpen.addActionListener(this);
@@ -98,6 +102,7 @@ public class textpad implements ActionListener {
         mb.add(mHelp);
         mb.add(fonts);
         mb.add(fontSizes);
+        mb.add(theme);
         f.addWindowListener (new WindowAdapter() {    
             public void windowClosing (WindowEvent e) {    
                 System.exit(0);    
@@ -112,6 +117,9 @@ public class textpad implements ActionListener {
         // f.pack();
         // f.setLayout(null);
         f.setVisible(true);
+        ta.setMargin(new Insets(0,10 , 10, 10));
+        // Border eb=new Border(10, 10, 10, 10);
+        // ta.setBorder(eb);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -182,9 +190,21 @@ public class textpad implements ActionListener {
             d.setVisible(true);
 
         }
-        else if(e.getSource()==fonts || e.getSource()==fontSizes){
+        else if(e.getSource()==fonts || e.getSource()==fontSizes || e.getSource()==theme){
             String fnt=fonts.getSelectedItem().toString();
             int size=Integer.parseInt(fontSizes.getSelectedItem().toString());
+            String thm=theme.getSelectedItem().toString();
+            if(thm=="Light"){
+                ta.setBackground(Color.WHITE);
+                ta.setForeground(Color.BLACK);
+                ta.setCaretColor(Color.BLACK);
+            }
+            else if(thm=="Dark"){
+                ta.setBackground(Color.BLACK);
+                ta.setForeground(Color.WHITE);
+                ta.setCaretColor(Color.WHITE);
+            }
+            // Font s=new Font(fnt, Font.PLAIN, size);
             ta.setFont(new Font(fnt, Font.PLAIN, size));
         }
     }
