@@ -4,9 +4,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.FileChooserUI;
 import java.io.*;
+import java.util.concurrent.Flow;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.print.PrinterException;
+
 
 public class textpad implements ActionListener {
     JFrame f=new JFrame();
@@ -15,6 +17,7 @@ public class textpad implements ActionListener {
 
     JMenu mFile=new JMenu("File");
     JMenu mEdit=new JMenu("Edit");
+    JMenu mFormat=new JMenu("Format");
     JMenu mHelp=new JMenu("Help");
 
     JMenuItem miNew=new JMenuItem("New");
@@ -27,6 +30,8 @@ public class textpad implements ActionListener {
     JMenuItem miCopy=new JMenuItem("Copy");
     JMenuItem miPaste=new JMenuItem("Paste");
     JMenuItem miSelectAll = new JMenuItem("Select All");
+
+    JMenuItem miFontColor=new JMenuItem("Font Color");
 
     // mi31=new JMenuItem("Documentation");
     JMenuItem miAbout=new JMenuItem("About");
@@ -43,14 +48,15 @@ public class textpad implements ActionListener {
     JScrollPane scrollPane=new JScrollPane(ta);
     JDialog d=new JDialog(f,"About",true);
 
-    
+    // JColorChooser miColorChooser=new JColorChooser();
 
     textpad(){
-        d.setLayout(new FlowLayout());
-        d.add(new JLabel("This is textpad."));
-        d.add(new JLabel("Created by naveen_21tyagi"));
-        d.add(new JLabel(":)"));
-        d.setVisible(false);
+        JPanel panel=new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(new JLabel("This is textpad."));
+        panel.add(new JLabel("Created by naveen_21tyagi"));
+        panel.add(new JLabel(":)"));
         JButton ok=new JButton("OK");
         ok.addActionListener ( new ActionListener()  
         {  
@@ -59,8 +65,13 @@ public class textpad implements ActionListener {
                 d.setVisible(false);  
             }  
         });
-        d.add(ok);
-        d.setSize(200,150);
+        panel.add(ok);
+        
+        d.setLayout(new FlowLayout());
+        d.add(panel);
+        d.setVisible(false);
+        d.pack();
+        // d.setSize(200,150);
         fonts.addActionListener(this);
         fontSizes.addActionListener(this);
         theme.addActionListener(this);
@@ -76,6 +87,9 @@ public class textpad implements ActionListener {
         miCopy.addActionListener(this);
         miPaste.addActionListener(this);
         miSelectAll.addActionListener(this);
+
+        miFontColor.addActionListener(this);
+
 
 
         // mi31.addActionListener(this);
@@ -93,12 +107,17 @@ public class textpad implements ActionListener {
         mEdit.add(miPaste);
         mEdit.add(miSelectAll);
 
+        mFormat.add(miFontColor);
+
         // mHelp.add(mi31);
         mHelp.add(miAbout);
         // mHelp.add(mi33);
 
+        
+
         mb.add(mFile);
         mb.add(mEdit);
+        mb.add(mFormat);
         mb.add(mHelp);
         mb.add(fonts);
         mb.add(fontSizes);
@@ -117,7 +136,7 @@ public class textpad implements ActionListener {
         // f.pack();
         // f.setLayout(null);
         f.setVisible(true);
-        ta.setMargin(new Insets(0,10 , 10, 10));
+        ta.setMargin(new Insets(0,5 , 10, 10));
         // Border eb=new Border(10, 10, 10, 10);
         // ta.setBorder(eb);
     }
@@ -186,6 +205,15 @@ public class textpad implements ActionListener {
         else if(e.getSource()==miSelectAll){
             ta.selectAll();
         }
+        else if(e.getSource()==miFontColor){
+            Color selectedColor=null;
+            Color color=JColorChooser.showDialog(f,"Select a color",selectedColor);
+            if(color!=null){
+                selectedColor=color;
+            }
+            ta.setForeground(selectedColor);
+            ta.setCaretColor(selectedColor);
+        }
         else if(e.getSource()==miAbout){
             d.setVisible(true);
 
@@ -196,15 +224,15 @@ public class textpad implements ActionListener {
             String thm=theme.getSelectedItem().toString();
             if(thm=="Light"){
                 ta.setBackground(Color.WHITE);
-                ta.setForeground(Color.BLACK);
-                ta.setCaretColor(Color.BLACK);
+                // ta.setForeground(Color.BLACK);
+                // ta.setCaretColor(Color.BLACK);
             }
             else if(thm=="Dark"){
                 ta.setBackground(Color.BLACK);
-                ta.setForeground(Color.WHITE);
-                ta.setCaretColor(Color.WHITE);
+                // ta.setForeground(Color.WHITE);
+                // ta.setCaretColor(Color.WHITE);
             }
-            // Font s=new Font(fnt, Font.PLAIN, size);
+            Font s=new Font(fnt, Font.PLAIN, size);
             ta.setFont(new Font(fnt, Font.PLAIN, size));
         }
     }
