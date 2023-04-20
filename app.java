@@ -32,6 +32,7 @@ public class textpad implements ActionListener {
     JMenuItem miSelectAll = new JMenuItem("Select All");
 
     JMenuItem miFontColor=new JMenuItem("Font Color");
+    JMenuItem miBackgroundColor=new JMenuItem("Background Color");
 
     // mi31=new JMenuItem("Documentation");
     JMenuItem miAbout=new JMenuItem("About");
@@ -89,6 +90,7 @@ public class textpad implements ActionListener {
         miSelectAll.addActionListener(this);
 
         miFontColor.addActionListener(this);
+        miBackgroundColor.addActionListener(this);
 
 
 
@@ -108,6 +110,7 @@ public class textpad implements ActionListener {
         mEdit.add(miSelectAll);
 
         mFormat.add(miFontColor);
+        mFormat.add(miBackgroundColor);
 
         // mHelp.add(mi31);
         mHelp.add(miAbout);
@@ -214,13 +217,26 @@ public class textpad implements ActionListener {
             ta.setForeground(selectedColor);
             ta.setCaretColor(selectedColor);
         }
+        else if(e.getSource()==miBackgroundColor){
+            Color selectedColor=null;
+            Color color=JColorChooser.showDialog(f,"Select a color",selectedColor);
+            if(color!=null){
+                selectedColor=color;
+            }
+            ta.setBackground(selectedColor);
+            // ta.setCaretColor(selectedColor);
+        }
         else if(e.getSource()==miAbout){
             d.setVisible(true);
 
         }
-        else if(e.getSource()==fonts || e.getSource()==fontSizes || e.getSource()==theme){
+        else if(e.getSource()==fonts || e.getSource()==fontSizes){
             String fnt=fonts.getSelectedItem().toString();
             int size=Integer.parseInt(fontSizes.getSelectedItem().toString());
+            Font s=new Font(fnt, Font.PLAIN, size);
+            ta.setFont(new Font(fnt, Font.PLAIN, size));
+        }
+        else if(e.getSource()==theme){
             String thm=theme.getSelectedItem().toString();
             if(thm=="Light"){
                 ta.setBackground(Color.WHITE);
@@ -232,8 +248,6 @@ public class textpad implements ActionListener {
                 // ta.setForeground(Color.WHITE);
                 // ta.setCaretColor(Color.WHITE);
             }
-            Font s=new Font(fnt, Font.PLAIN, size);
-            ta.setFont(new Font(fnt, Font.PLAIN, size));
         }
     }
     public static void main(String args[]) throws Exception{
