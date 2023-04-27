@@ -125,11 +125,12 @@ public class Textpad implements ActionListener {
         mb.add(fonts);
         mb.add(fontSizes);
         mb.add(theme);
-        f.addWindowListener (new WindowAdapter() {    
-            public void windowClosing (WindowEvent e) {    
-                System.exit(0);    
-            }    
-        });
+        // f.addWindowListener (new WindowAdapter() {    
+        //     public void windowClosing (WindowEvent e) {    
+        //         System.exit(0);    
+        //     }    
+        // });
+        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         f.setJMenuBar(mb);
         f.add(scrollPane);  
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -154,7 +155,14 @@ public class Textpad implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==miNew){
-            ta.setText(null);
+            // if(ta.getText()!=null)
+            try{
+                new Textpad();
+            }
+            catch(Exception ee){
+                ee.fillInStackTrace();
+            }
+            // ta.setText(null);
         }
         else if(e.getSource()==miOpen){    
             JFileChooser fc=new JFileChooser();    
@@ -206,7 +214,8 @@ public class Textpad implements ActionListener {
             }
         }
         else if(e.getSource()==miExit){
-            System.exit(0);
+            // System.exit(0);
+            f.dispose();
         }
         else if(e.getSource()==miCut){
             ta.cut();

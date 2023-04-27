@@ -49,13 +49,16 @@ public class Login implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==sub){
-            System.out.print("He");
             String name=idT.getText();
             String pass=pswdT.getText();
             if(name.equals("User") && pass.equals("123456")){
-            System.out.print("He");
                 f.setVisible(false);
+                try{
                 new Textpad();
+                }
+                catch(Exception ee){
+                    ee.fillInStackTrace();
+                }
             }
         }
     }
