@@ -50,7 +50,8 @@ public class Textpad implements ActionListener {
 
     // JColorChooser miColorChooser=new JColorChooser();
 
-    public Textpad(){
+    Crypt crypt;
+    public Textpad() throws Exception{
         JPanel panel=new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -141,6 +142,9 @@ public class Textpad implements ActionListener {
         ta.setMargin(new Insets(0,5 , 10, 10));
         // Border eb=new Border(10, 10, 10, 10);
         // ta.setBorder(eb);
+
+
+        crypt=new Crypt();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -154,13 +158,17 @@ public class Textpad implements ActionListener {
                 File f=fc.getSelectedFile();    
                 String filepath=f.getPath();    
                 try{  
-                    BufferedReader br=new BufferedReader(new FileReader(filepath));    
-                    String s1="",s2="";                         
-                    while((s1=br.readLine())!=null){    
-                    s2+=s1+"\n";    
-                    }    
-                    ta.setText(s2);    
-                    br.close();    
+                    // BufferedReader br=new BufferedReader(new FileReader(filepath));
+                    FileInputStream file=new FileInputStream(filepath);
+                    byte [] ans=file.readAllBytes();
+                    // while()
+                    // String s1="",s2="";                         
+                    // while((s1=br.readLine())!=null){    
+                    // s2+=s1+"\n";    
+                    // } 
+                    ta.setText(crypt.decrypt(ans));    
+                    // br.close();    
+                    file.close();
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();  
@@ -175,8 +183,8 @@ public class Textpad implements ActionListener {
                 File f=fc.getSelectedFile();    
                 String filepath=f.getPath();    
                 try{  
-                    FileWriter file=new FileWriter(filepath);
-                    file.write(ta.getText());
+                    FileOutputStream file=new FileOutputStream(filepath);
+                    file.write(crypt.encrypt(ta.getText()));
                     file.close();
                 }       
                 catch (Exception ex) {
