@@ -1,5 +1,6 @@
 // package textpad;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.FileChooserUI;
@@ -11,7 +12,6 @@ import java.awt.print.PrinterException;
 
 public class Textpad implements ActionListener {
     JFrame f=new JFrame();
-
     JMenuBar mb=new JMenuBar();
 
     JMenu mFile=new JMenu("File");
@@ -145,6 +145,11 @@ public class Textpad implements ActionListener {
 
 
         crypt=new Crypt();
+
+        // ImageIcon myAppImage = loadIcon("notepad.ico");
+        // if(myAppImage != null)
+        //     f.setIconImage(myAppImage.getImage());
+        f.setIconImage(ImageIO.read(new File("textpad.png")));
     }
     @Override
     public void actionPerformed(ActionEvent e) {
