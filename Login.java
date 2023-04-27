@@ -1,32 +1,18 @@
-// package textpad;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.UIManager;;
-// import textpad.textpad;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-// import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-
+import java.io.*;
+import javax.imageio.ImageIO;
 
 public class Login implements ActionListener{
-    // textpad file=new textpad();
-
     JFrame f=new JFrame();
-    // f.setTitle("Login");
-
     JLabel id=new JLabel("User ID");
     JLabel pswd=new JLabel("Password");
     JTextField idT=new JTextField();
     JTextField pswdT=new JTextField();
     JButton sub=new JButton("Submit");
     
-    Login(){
+    Login()throws Exception{
         idT.addActionListener(this);
         pswdT.addActionListener(this);
         sub.addActionListener(this);
@@ -34,17 +20,14 @@ public class Login implements ActionListener{
         f.setLayout(new GridLayout(3,2));
         f.add(id);
         f.add(idT);
-
+        f.setTitle("Login");
         f.add(pswd);
         f.add(pswdT);
         f.add(sub);
         f.setVisible(true);
         f.setBounds(200, 200, 250, 250);
-        f.addWindowListener (new WindowAdapter() {    
-            public void windowClosing (WindowEvent e) {    
-                System.exit(0);    
-            }    
-        });
+        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        f.setIconImage(ImageIO.read(new File("textpad.png")));
     }
     @Override
     public void actionPerformed(ActionEvent e){
@@ -52,7 +35,7 @@ public class Login implements ActionListener{
             String name=idT.getText();
             String pass=pswdT.getText();
             if(name.equals("User") && pass.equals("123456")){
-                f.setVisible(false);
+                f.dispose();;
                 try{
                 new Textpad();
                 }

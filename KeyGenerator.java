@@ -8,12 +8,6 @@ public class KeyGenerator {
         KeyPair keyPair=keyPairGen.generateKeyPair();
         PublicKey publicKey=keyPair.getPublic();
         PrivateKey privateKey=keyPair.getPrivate();
-        // FileWriter file=new FileWriter("privateKey.txt");
-        // file.write(privateKey.toString());
-        // file.close();
-        // file=new FileWriter("publicKey.txt");
-        // file.write(publicKey.toString());
-        // file.close();
         FileOutputStream fos=new FileOutputStream("keyPair");
         ObjectOutputStream oos=new ObjectOutputStream(fos);
         oos.writeObject(keyPair);

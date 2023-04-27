@@ -1,5 +1,3 @@
-// package textpad;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -47,8 +45,6 @@ public class Textpad implements ActionListener {
     JTextArea ta=new JTextArea();
     JScrollPane scrollPane=new JScrollPane(ta);
     JDialog d=new JDialog(f,"About",true);
-
-    // JColorChooser miColorChooser=new JColorChooser();
 
     Crypt crypt;
     public Textpad() throws Exception{
@@ -147,9 +143,6 @@ public class Textpad implements ActionListener {
 
         crypt=new Crypt();
 
-        // ImageIcon myAppImage = loadIcon("notepad.ico");
-        // if(myAppImage != null)
-        //     f.setIconImage(myAppImage.getImage());
         f.setIconImage(ImageIO.read(new File("textpad.png")));
     }
     @Override
@@ -261,13 +254,9 @@ public class Textpad implements ActionListener {
             String thm=theme.getSelectedItem().toString();
             if(thm=="Light"){
                 ta.setBackground(Color.WHITE);
-                // ta.setForeground(Color.BLACK);
-                // ta.setCaretColor(Color.BLACK);
             }
             else if(thm=="Dark"){
                 ta.setBackground(Color.BLACK);
-                // ta.setForeground(Color.WHITE);
-                // ta.setCaretColor(Color.WHITE);
             }
         }
     }

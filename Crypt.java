@@ -1,7 +1,5 @@
 import java.io.*;
 import java.security.*;
-import java.security.KeyPair;
-
 import javax.crypto.Cipher;
 
 public class Crypt {
