@@ -1,9 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.FileChooserUI;
 import java.io.*;
-import java.util.concurrent.Flow;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.print.PrinterException;
@@ -38,9 +35,9 @@ public class Textpad implements ActionListener {
     String fnts[]=GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
     String sizes[]={"10","16","21","41","51"};
     String themes[]={"Light","Dark"};
-    JComboBox fonts=new JComboBox<>(fnts);
-    JComboBox fontSizes=new JComboBox<>(sizes);
-    JComboBox theme=new JComboBox<>(themes);
+    JComboBox<String> fonts=new JComboBox<String>(fnts);
+    JComboBox<String> fontSizes=new JComboBox<String>(sizes);
+    JComboBox<String> theme=new JComboBox<String>(themes);
 
     JTextArea ta=new JTextArea();
     JScrollPane scrollPane=new JScrollPane(ta);
@@ -94,6 +91,24 @@ public class Textpad implements ActionListener {
         miAbout.addActionListener(this);
         // mi33.addActionListener(this);
 
+        // miNew.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        // miOpen.setHorizontalAlignment(SwingConstants.LEFT);
+        // miSave.setHorizontalAlignment(SwingConstants.LEFT);
+        // miPaste.setHorizontalAlignment(SwingConstants.LEFT);
+        // miExit.setHorizontalAlignment(SwingConstants.LEFT);
+
+        // miCut.setHorizontalAlignment(SwingConstants.LEFT);
+        // miCopy.setHorizontalAlignment(SwingConstants.LEFT);
+        // miPaste.setHorizontalAlignment(SwingConstants.LEFT);
+        // miSelectAll.setHorizontalAlignment(SwingConstants.LEFT);
+
+        // miFontColor.setHorizontalAlignment(SwingConstants.LEFT);
+        // miBackgroundColor.setHorizontalAlignment(SwingConstants.LEFT);
+
+        // miAbout.setHorizontalAlignment(SwingConstants.LEFT);
+
+
+
         mFile.add(miNew);
         mFile.add(miOpen);
         mFile.add(miSave);
@@ -112,8 +127,10 @@ public class Textpad implements ActionListener {
         mHelp.add(miAbout);
         // mHelp.add(mi33);
 
-        
 
+        fonts.setMaximumSize(new Dimension(200, 25));
+        fontSizes.setMaximumSize(new Dimension(100, 25));
+        theme.setMaximumSize(new Dimension(100, 25));
         mb.add(mFile);
         mb.add(mEdit);
         mb.add(mFormat);
@@ -121,11 +138,7 @@ public class Textpad implements ActionListener {
         mb.add(fonts);
         mb.add(fontSizes);
         mb.add(theme);
-        // f.addWindowListener (new WindowAdapter() {    
-        //     public void windowClosing (WindowEvent e) {    
-        //         System.exit(0);    
-        //     }    
-        // });
+
         f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         f.setJMenuBar(mb);
         f.add(scrollPane);  
@@ -133,8 +146,6 @@ public class Textpad implements ActionListener {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         f.setTitle("Textpad");
         f.setSize(700,500);
-        // f.pack();
-        // f.setLayout(null);
         f.setVisible(true);
         ta.setMargin(new Insets(0,5 , 10, 10));
         // Border eb=new Border(10, 10, 10, 10);
@@ -247,7 +258,6 @@ public class Textpad implements ActionListener {
         else if(e.getSource()==fonts || e.getSource()==fontSizes){
             String fnt=fonts.getSelectedItem().toString();
             int size=Integer.parseInt(fontSizes.getSelectedItem().toString());
-            Font s=new Font(fnt, Font.PLAIN, size);
             ta.setFont(new Font(fnt, Font.PLAIN, size));
         }
         else if(e.getSource()==theme){
