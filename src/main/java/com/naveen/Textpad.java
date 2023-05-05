@@ -1,3 +1,5 @@
+package com.naveen;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.*;
@@ -154,7 +156,9 @@ public class Textpad implements ActionListener {
 
         crypt=new Crypt();
 
-        f.setIconImage(ImageIO.read(new File("textpad.png")));
+        // f.setIconImage(ImageIO.read(new File("com/naveen/textpad.png")));
+        f.setIconImage(ImageIO.read(getClass().getResourceAsStream("/com/naveen/textpad.png")));
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {

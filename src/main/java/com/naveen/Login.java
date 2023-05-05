@@ -1,7 +1,8 @@
+package com.naveen;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
 import javax.imageio.ImageIO;
 
 public class Login implements ActionListener{
@@ -27,7 +28,9 @@ public class Login implements ActionListener{
         f.setVisible(true);
         f.setBounds(200, 200, 250, 250);
         f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        f.setIconImage(ImageIO.read(new File("textpad.png")));
+        // f.setIconImage(ImageIO.read(new File("/com/naveen/textpad.png")));
+        f.setIconImage(ImageIO.read(getClass().getResourceAsStream("/com/naveen/textpad.png")));
+
     }
     @Override
     public void actionPerformed(ActionEvent e){

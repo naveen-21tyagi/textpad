@@ -1,3 +1,5 @@
+package com.naveen;
+
 import java.io.*;
 import java.security.*;
 import javax.crypto.Cipher;
@@ -7,10 +9,11 @@ public class Crypt {
    KeyPair keyPair;
 
    Crypt() throws Exception{
-      //Creating a Cipher object
+      // System.out.println("aaa");
+      // Creating a Cipher object
       cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-      FileInputStream fis=new FileInputStream("keyPair");
-      ObjectInputStream ois=new ObjectInputStream(fis);
+      // FileInputStream fis=new FileInputStream("keyPair");
+      ObjectInputStream ois=new ObjectInputStream(getClass().getResourceAsStream("/com/naveen/keyPair"));
       keyPair=(KeyPair)ois.readObject();
       ois.close();
    }
